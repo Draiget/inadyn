@@ -265,8 +265,14 @@ static int set_provider_opts(cfg_t *cfg, ddns_info_t *info, int custom)
 	if (str && strlen(str) <= sizeof(info->creds.username))
 		strlcpy(info->creds.username, str, sizeof(info->creds.username));
 	str = cfg_getstr(cfg, "password");
-	if (str && strlen(str) <= sizeof(info->creds.password))
-		strlcpy(info->creds.password, str, sizeof(info->creds.password));
+	if (str){
+		if (strlen(str) > sizeof(info->creds.password)){
+			logit(LOG_WARNING, "Present password is bigger than maximum limit of %d symbols.", sizeof(info->creds.password));
+		} else {
+			strlcpy(info->creds.password, str, sizeof(info->creds.password));
+		}
+	}
+
 
 	for (j = 0; j < cfg_size(cfg, "hostname"); j++) {
 		size_t pos = info->alias_count;

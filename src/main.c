@@ -301,7 +301,7 @@ int main(int argc, char *argv[])
 			break;
 
 		case 'c':	/* --cmd=CMD */
-			script_cmd = optarg;
+			script_cmd = strdup(optarg);
 			break;
 
 		case 'C':	/* --continue-on-error */
@@ -309,7 +309,7 @@ int main(int argc, char *argv[])
 			break;
 
 		case 'e':	/* --exec=CMD */
-			script_exec = optarg;
+			script_exec = strdup(optarg);
 			break;
 
 		case 'f':	/* --config=FILE */
@@ -323,7 +323,7 @@ int main(int argc, char *argv[])
 			break;
 
 		case 'i':	/* --iface=IFNAME */
-			iface = optarg;
+			iface = strdup(optarg);
 			break;
 
 		case 'I':	/* --ident=NAME */
@@ -429,8 +429,9 @@ int main(int argc, char *argv[])
 
 	/* Prepare SSL library, if enabled */
 	rc = ssl_init();
-	if (rc)
+	if (rc) {
 		goto leave;
+	}
 
 	do {
 		restart = 0;
@@ -462,6 +463,12 @@ leave:
 	free(config);
 	free(pidfile_name);
 	free(cache_dir);
+	if (script_cmd)
+		free(script_cmd);
+	if (script_exec)
+		free(script_exec);
+	if (iface)
+		free(iface);
 
 	return rc;
 }

@@ -552,6 +552,12 @@ static int send_update(ddns_t *ctx, ddns_info_t *info, ddns_alias_t *alias, int 
 	memset(&trans, 0, sizeof(trans));
 
 	trans.req_len     = info->system->request(ctx, info, alias);
+    if (trans.req_len <= 0) {
+        logit(LOG_ERR, "Failed creating server request for %s", info->system->name);
+        rc = RC_ERROR;
+        goto exit;
+    }
+
 	trans.req         = (char *)ctx->request_buf;
 	trans.rsp         = (char *)ctx->work_buf;
 	trans.max_rsp_len = ctx->work_buflen - 1;	/* Save place for a \0 at the end */
@@ -645,6 +651,7 @@ static int update_alias_table(ddns_t *ctx)
 			if (!alias->update_required)
 				continue;
 
+            logit(LOG_NOTICE, "Try Sending IP# update to DDNS server");
 			TRY(send_update(ctx, info, alias, &anychange));
 
 			/* Only reset if send_update() succeeds. */

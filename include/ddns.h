@@ -46,7 +46,7 @@
 #define DDNS_DEFAULT_PERIOD               120     /* sec */
 #define DDNS_MIN_PERIOD                   30      /* sec */
 #define DDNS_MAX_PERIOD                   (10 * 24 * 3600)        /* 10 days in sec */
-#define DDNS_ERROR_UPDATE_PERIOD          600     /* 10 min */
+#define DDNS_ERROR_UPDATE_PERIOD          10     /* 10 min */
 #define DDNS_FORCED_UPDATE_PERIOD         (30 * 24 * 3600)        /* 30 days in sec */
 #define DDNS_DEFAULT_CMD_CHECK_PERIOD     1       /* sec */
 #define DDNS_DEFAULT_ITERATIONS           0       /* Forever */
@@ -62,7 +62,7 @@
 
 /* local configs */
 #define USERNAME_LEN                      50      /* chars */
-#define PASSWORD_LEN                      50      /* chars */
+#define PASSWORD_LEN                      60      /* chars */
 #define SERVER_NAME_LEN                   256     /* chars */
 #define SERVER_URL_LEN                    256     /* chars */
 #ifdef INET6_ADDRSTRLEN

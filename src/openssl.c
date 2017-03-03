@@ -25,10 +25,14 @@
 
 int ssl_init(void)
 {
+	logit(LOG_NOTICE, "SSL_library_init ...");
 	SSL_library_init();
+	logit(LOG_NOTICE, "SSL_load_error_strings ...");
 	SSL_load_error_strings();
+	logit(LOG_NOTICE, "OpenSSL_add_all_algorithms ...");
 	OpenSSL_add_all_algorithms();
 
+	logit(LOG_NOTICE, "ssl_init return ...");
 	return 0;
 }
 
